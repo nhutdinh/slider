@@ -7,35 +7,44 @@ display: inline-block;
 vertical-align: top;`;
 const trackBackground = (props: SliderProps) => `linear-gradient(
     to right,
-    transparent ${props.lowValue + "%"},
+    transparent ${100 *
+      ((Math.min(props.lowValue, props.highValue) - 0) / (100 - 0)) +
+      1 +
+      "%"},
     hsl(190, 80%, 40%) 0,
-    hsl(190, 80%, 40%) ${props.highValue + "%"},
-    transparent 0
-  );`;
-export const OriginalInputStyled = styled.div<SliderProps>`
-  input {
-    ${inputStyle}
-    position: absolute;
+    hsl(190, 80%, 40%) ${100 *
+      ((Math.max(props.lowValue, props.highValue) - 0) / (100 - 0)) -
+      1 +
+      "%"},
+    transparent 0 ) no-repeat 0 45% / 100% 40%;;`;
+
+export const OriginalInputStyled = styled.input.attrs({ type: "range" })<
+  SliderProps
+>`
+  ${inputStyle}
+  position: absolute;
+  &::-webkit-slider-thumb {
+    position: relative;
+    z-index: 2;
+  }
+  &::-moz-range-thumb {
+    z-index: 2;
   }
 `;
 
-export const GhostInputStyled = styled.div<SliderProps>`
-  input{
+export const GhostInputStyled = styled.input.attrs({ type: "range" })<
+  SliderProps
+>`
     ${inputStyle}
     position: relative;
     background: ${(props: SliderProps): string => trackBackground(props)}
-    &::-webkit-slider-runnable-track,
+    &::-webkit-slider-runnable-track{
+      background: ${(props: SliderProps): string => trackBackground(props)}
+    }
     &::-moz-range-track {
-      background: red;
+      background: ${(props: SliderProps): string => trackBackground(props)}
     }
-    &::-webkit-slider-thumb {
-      position: relative;
-      z-index: 2;
-    }
-    &::-moz-range-thumb {
-      z-index: 2;
-    }
+   
   
-  }
   
 `;
