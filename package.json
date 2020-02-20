@@ -53,7 +53,7 @@
   "scripts": {
     "bundle": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --mode development --open --hot",
+    "start": "webpack-dev-server --mode development --open --hot --host 192.168.1.120",
     "build": "webpack --mode production",
     "check-types": "tsc"
   }
