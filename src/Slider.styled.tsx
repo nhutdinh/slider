@@ -19,12 +19,18 @@ export const SliderStyled = styled.div`
   .noUi-connect {
     background: red;
   }
-  // .noUi-horizontal .noUi-tooltip {
-  //   top: -115px;
-  //   bottom: auto;
-  //   &:after {
-  //     content: "";
-  //     border: 1px #aaaaaa solid;
-  //   }
-  // }
+  .noUi-marker-horizontal.noUi-marker {
+    height: 100%;
+    background: transparent;
+    border-right: 1px #ccc dashed;
+    bottom: 100%;
+  }
+
+  .noUi-value.noUi-value-horizontal.noUi-value-large {
+    bottom: 220%;
+  }
+
+  .noUi-tooltip {
+    white-space: normal;
+  }
 `;

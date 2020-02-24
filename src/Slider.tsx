@@ -24,11 +24,29 @@ type AllProps = SliderProps & Partial<Options>;
 const Slider: React.FC<AllProps> = (props: AllProps): React.ReactElement => {
   let sliderRef = React.createRef<HTMLDivElement>();
   let sliderInstance: noUiSlider.noUiSlider;
+  function filterPips(value, type) {
+    if (type === 0) {
+      return value === 62 || value === 83 ? 1 : value === 28 ? 1 : -1;
+    }
+    // console.log(type, value);
+    // if (type === 0) {
+    //   return value < 2000 ? -1 : 0;
+    // }
+    // return value % 1000 ? 2 : 1;
+    return value === 62 || value === 83 ? 1 : -1;
+  }
   const defaultOptions: noUiSlider.Options = {
-    tooltips: [wNumb({ decimals: 1 })],
+    tooltips: [
+      {
+        from: Number,
+        to: function(value) {
+          return "<span>Age</span> " + value.toFixed(0);
+        }
+      }
+    ],
     range: {
-      min: 0,
-      max: 100
+      min: 28,
+      max: 120
     },
     connect: "lower",
 
@@ -39,9 +57,22 @@ const Slider: React.FC<AllProps> = (props: AllProps): React.ReactElement => {
 
     // Move handle on tap, bars are draggable
     behaviour: "tap-drag",
-    format: wNumb({
-      decimals: 0
-    })
+    format: wNumb({ decimals: 0 }),
+    pips: {
+      mode: "steps",
+      density: 3,
+      filter: filterPips,
+      format: {
+        from: Number,
+        to: function(value) {
+          return `<div>${
+            value === 83
+              ? "til live age is " + value.toFixed(0) + " years old"
+              : "anything"
+          }</div>`;
+        }
+      }
+    }
   };
 
   useEffect(() => {
